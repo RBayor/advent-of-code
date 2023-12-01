@@ -9,7 +9,8 @@ bun install
 To run:
 
 ```bash
-bun dev
+bun dev # for the actual solution
+bun test # for the tests
 ```
 
 My solutions to advent of code 2023 using typescript and bun.sh. Might as well learn bun while doing this 😅.

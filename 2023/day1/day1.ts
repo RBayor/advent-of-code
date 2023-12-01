@@ -1,16 +1,10 @@
 import { cwd } from "process";
 import { readLocalTextFile } from "../utils/utils";
 
-// const testCases = ["1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet"];
-// const testCases2 = [
-//   "two1nine",
-//   "eightwothree",
-//   "abcone2threexyz",
-//   "xtwone3four",
-//   "4nineeightseven2",
-//   "zoneight234",
-//   "7pqrstsixteen",
-// ];
+export const pathToInputOne = cwd() + "/2023/day1/test-inputs-1.txt";
+export const pathToInputTwo = cwd() + "/2023/day1/test-inputs-2.txt";
+const realDataPath = cwd() + "/2023/day1/inputs.prod.txt"; // path to your own input
+
 const validNumberMap = {
   one: 1,
   two: 2,
@@ -23,6 +17,26 @@ const validNumberMap = {
   nine: 9,
 };
 
+// PART 1
+export const part1 = (input: string[]) => {
+  return input.map((word) => {
+    const list: number[] = [];
+    for (const char of word) {
+      if (!isNaN(Number(char))) list.push(+char);
+    }
+
+    return +`${list.at(0)}${list.at(-1)}`;
+  });
+};
+
+export const partOneAnswer = async () => {
+  const inputOne = await readLocalTextFile(pathToInputOne);
+  if (!inputOne) return;
+
+  return part1(inputOne).reduce((acc, curr) => acc + curr, 0);
+};
+
+// PART 2
 const extractNumber = (word: string, isReversed: boolean = false) => {
   let tempLetters = "";
 
@@ -46,29 +60,35 @@ const extractNumber = (word: string, isReversed: boolean = false) => {
   return null;
 };
 
-const findFirstAndLastNumber = (input: string[]) => {
-  const answers: number[] = [];
+export const part2 = (input: string[]): number[] => {
+  return input
+    .map((word) => {
+      const firstNumber = extractNumber(word);
+      const lastNumber = extractNumber(word, true);
 
-  input.forEach((word) => {
-    const firstNumber = extractNumber(word);
-    const lastNumber = extractNumber(word, true);
+      if (firstNumber !== null && lastNumber !== null) {
+        return parseInt(`${firstNumber}${lastNumber}`, 10);
+      }
 
-    if (firstNumber !== null && lastNumber !== null) {
-      const number = parseInt(`${firstNumber}${lastNumber}`, 10);
-      answers.push(number);
-    }
-  });
-
-  return answers;
+      return null;
+    })
+    .filter((num): num is number => num !== null) as number[];
 };
 
+export const partTwoAnswer = async () => {
+  const inputTwo = await readLocalTextFile(pathToInputTwo);
+  if (!inputTwo) return;
+
+  return part2(inputTwo).reduce((acc, curr) => acc + curr, 0);
+};
+
+// Actual answer
+
 export const day1 = async () => {
-  const input = await readLocalTextFile(cwd() + "/2023/day1/input.txt");
+  const input = await readLocalTextFile(realDataPath);
 
-  if (!input) return { array: [], sum: 0 };
+  if (!input) throw new Error("No input");
 
-  const numArr = findFirstAndLastNumber(input);
-  const sum = numArr.reduce((acc, curr) => acc + curr, 0);
-
-  return { array: numArr, sum };
+  const sum = part2(input).reduce((acc, curr) => acc + curr, 0);
+  console.log({ sum });
 };
