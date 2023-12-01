@@ -42,9 +42,7 @@ const extractNumber = (word: string, isReversed: boolean = false) => {
 
   const chars = isReversed ? [...word].reverse() : word;
   for (const char of chars) {
-    if (!isNaN(Number(char))) {
-      return +char;
-    } else {
+    if (isNaN(Number(char))) {
       tempLetters = (
         isReversed ? char + tempLetters : tempLetters + char
       ).toLowerCase();
@@ -55,6 +53,8 @@ const extractNumber = (word: string, isReversed: boolean = false) => {
       if (validNumber) {
         return validNumberMap[validNumber as keyof typeof validNumberMap];
       }
+    } else {
+      return +char;
     }
   }
   return null;
