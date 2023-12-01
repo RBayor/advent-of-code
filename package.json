@@ -1,6 +1,9 @@
 {
   "name": "advent-of-code",
   "module": "index.ts",
+  "author": {
+    "name": "Roland Bayor"
+  },
   "type": "module",
   "scripts": {
     "dev": "bun run index.ts"

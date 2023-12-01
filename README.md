@@ -9,7 +9,8 @@ bun install
 To run:
 
 ```bash
-bun run index.ts
+bun dev
 ```
 
-This project was created using `bun init` in bun v1.0.14. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+My solutions to advent of code 2023 using typescript and bun.sh. Might as well learn bun while doing this 😅.
+I will probably include other solutions I come accross that i find interesting. But my solutions will always be named "day[DayIndex].ts"
